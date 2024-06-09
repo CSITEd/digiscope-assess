@@ -6,6 +6,7 @@ const { data } = await useFetch('/api/test')
 <template>
   <div>
     <h1>Welcome</h1>
-    <pre>{{ data }}</pre>
   </div>
+
+  <MCQuestion v-if="data" :question="data.questions[0]" />
 </template>
