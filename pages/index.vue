@@ -1,12 +1,7 @@
-<script setup lang="ts">
-const route = useRoute()
-const { data } = await useFetch('/api/test')
-</script>
-
 <template>
-  <div>
-    <h1>Welcome</h1>
-  </div>
+  <h1>Welcome</h1>
 
-  <MCQuestion v-if="data" :question="data.questions[0]" />
+  <p>Blablabla</p>
+
+  <VBtn color="primary" to="/play">Play</VBtn>
 </template>
