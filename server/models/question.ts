@@ -1,10 +1,28 @@
 import { model, Schema } from 'mongoose'
 
+type IChoice = {
+    image: URL
+    text: string
+}
+
 export type IQuestion = {
     answer: number
-    choices: string[]
+    choices: IChoice[]
     statement: string
+    type: 'behaviour' | 'theory'
 }
+
+const ChoiceSchema = new Schema<IChoice>({
+    image: {
+        type: String,
+    },
+    text: {
+        type: String
+    },
+}, {
+    id: false,
+    _id: false,
+})
 
 const QuestionSchema = new Schema<IQuestion>({
     answer: {
@@ -12,13 +30,18 @@ const QuestionSchema = new Schema<IQuestion>({
         required: true,
     },
     choices: {
-        type: [String],
+        type: [ChoiceSchema],
         required: true,
     },
     statement: {
         type: String,
         required: true,
         trim: true,
+    },
+    type: {
+        type: String,
+        enum: ['behaviour', 'theory'],
+        required: true,
     },
 })
 

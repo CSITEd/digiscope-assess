@@ -12,7 +12,7 @@ const props = defineProps<{
             <VItemGroup selected-class="bg-primary" class="choices">
                 <VItem v-for="choice in question.choices" v-slot="{ selectedClass, toggle }">
                     <VCard :class="selectedClass" @click="toggle">
-                        <VCardText class="d-flex justify-center align-center">{{ choice }}</VCardText>
+                        <VCardText class="d-flex justify-center align-center">{{ choice.text }}</VCardText>
                     </VCard>
                 </VItem>
             </VItemGroup>
