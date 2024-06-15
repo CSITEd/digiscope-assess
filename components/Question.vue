@@ -1,6 +1,9 @@
 <script setup lang="ts">
 const props = defineProps<{
-    question: { choices: string[], statement: string }
+    question: {
+        choices: string[]
+        statement: string
+    }
 }>()
 </script>
 

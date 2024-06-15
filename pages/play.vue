@@ -8,6 +8,5 @@ const { data } = await useFetch('/api/test')
     <h1>Welcome</h1>
   </div>
 
-  <MCQuestion v-if="data" :question="data.questions[0]" />
-  <VBtn>Valider</VBtn>
+  <Quiz :questions="data.questions" />
 </template>
