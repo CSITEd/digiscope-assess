@@ -1,7 +1,7 @@
-import Question, { IQuestion } from '../models/question'
+import Question, { IQuestion } from '@/server/models/question'
 
-export default defineEventHandler(async (event) => {
-    return {
-        questions: await Question.find() as IQuestion[]
-    }
+export default defineEventHandler(async () => {
+  return {
+    questions: await Question.find() as IQuestion[]
+  }
 })

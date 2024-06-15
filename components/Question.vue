@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import type { IChoice } from '@/server/models/question'
+
 const props = defineProps<{
     question: {
-        choices: string[]
+        choices: IChoice[]
         statement: string
     }
 }>()
@@ -15,7 +17,12 @@ const props = defineProps<{
             <VItemGroup selected-class="bg-primary" class="choices">
                 <VItem v-for="choice in question.choices" v-slot="{ selectedClass, toggle }">
                     <VCard :class="selectedClass" @click="toggle">
-                        <VCardText class="d-flex justify-center align-center">{{ choice.text }}</VCardText>
+                        <VCardText v-if="choice.type === 'text'" class="d-flex justify-center align-center">
+                            {{ choice.text }}
+                        </VCardText>
+                        <VCardText v-else-if="choice.type === 'image'" class="d-flex justify-center align-center">
+                            <img :src="`/${choice.image}`" />
+                        </VCardText>
                     </VCard>
                 </VItem>
             </VItemGroup>
