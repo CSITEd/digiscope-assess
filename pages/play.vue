@@ -28,7 +28,10 @@ onMounted(async () => {
 </script>
 
 <template>
-  <VSkeletonLoader v-if="loading" type="card" />
+  <template v-if="loading">
+    <p>Chargement du quiz en cours, patientez...</p>
+    <VSkeletonLoader type="card" />
+  </template>
   <template v-else>
     <template v-if="!human">
       <p>You are not a human!</p>
