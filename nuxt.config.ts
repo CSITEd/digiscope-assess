@@ -17,6 +17,11 @@ export default defineNuxtConfig({
       })
     },
   ],
+  runtimeConfig: {
+    public: {
+      googleRecaptchaKey: process.env.GOOGLE_RECAPTCHA_SITE_KEY,
+    }
+  },
   vite: {
     vue: {
       template: {
