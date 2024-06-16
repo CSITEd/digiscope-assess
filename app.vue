@@ -1,8 +1,13 @@
 <template>
-  <div>
-    DigiScope
-  </div>
   <VApp>
-    <NuxtPage />
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
   </VApp>
 </template>
+
+<style>
+body {
+  margin: 15px;
+}
+</style>
