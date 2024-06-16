@@ -13,8 +13,13 @@ export default defineEventHandler(async (event) => {
   });
 
   if (data.success && data.score > 0.5) {
+    const questions = await Question.aggregate([
+      { $sample: { size: 2 } },
+      { $project: { choices: 1, statement: 1} },
+    ])
+
     return {
-      questions: await Question.find() as IQuestion[]
+      questions: questions.map((doc) => Question.hydrate(doc)) as IQuestion[]
     }
   }
 
