@@ -1,6 +1,5 @@
 <script setup lang="ts">
-const route = useRoute()
-const { data } = await useFetch('/api/test')
+  const { data } = await useFetch('/api/test')
 </script>
 
 <template>
