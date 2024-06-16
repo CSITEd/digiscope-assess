@@ -17,7 +17,9 @@ const onHomePage = computed(() => route.fullPath === '/')
     <slot />
   </VMain>
 
-  <VFooter>
-
+  <VFooter class="d-flex flex-column" border app>
+    <div class="text-body-2 text-center">
+      Conçu par <strong>AEI Consulting</strong> — 2024.
+    </div>
   </VFooter>
 </template>
