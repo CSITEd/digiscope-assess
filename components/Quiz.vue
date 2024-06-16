@@ -35,26 +35,29 @@ function nextQuestion() {
 
 <template>
   <VCard>
-    <VCardTitle>
+    <template v-slot:title>
       <template v-if="ongoing">
         Question {{ currentQuestion + 1 }} sur {{ length }}
       </template>
-      <template v-else>Récapitulatif</template>
-    </VCardTitle>
+      <template v-else>Résultats</template>
+    </template>
 
-    <VCardText>
+    <template v-if="ongoing" v-slot:append>
+      <Timer :start-timestamp="Date.now()" />
+    </template>
+
+    <template v-slot:text>
       <Question v-if="ongoing" :question="questions[currentQuestion]" v-model="selectedAnswer" />
-    </VCardText>
+    </template>
 
-    <VCardActions v-if="ongoing" class="d-flex justify-center">
-      <VBtn color="warning" @click="skipQuestion">
-        Passer la question
-      </VBtn>
-      <VBtn color="primary" :disabled="!canMoveNext" @click="saveAnswer">
-        Enregistrer la réponse
-      </VBtn>
-    </VCardActions>
+    <template v-slot:actions v-if="ongoing">
+      <div class="d-flex flex-wrap justify-center w-100">
+        <VBtn color="warning" text="Passer la question" @click="skipQuestion" />
+        <VBtn color="primary" :disabled="!canMoveNext" text="Enregistrer la réponse" @click="saveAnswer" />
+      </div>
+    </template>
   </VCard>
+
   <p v-if="ongoing">Selected answer: {{ selectedAnswer }}</p>
   <p>Answer: {{ answers }}</p>
   <p>Status: {{ ongoing ? 'ONGOING' : 'FINISHED' }}</p>

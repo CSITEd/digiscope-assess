@@ -29,8 +29,10 @@ onMounted(async () => {
 
 <template>
   <template v-if="loading">
-    <p>Chargement du quiz en cours, patientez...</p>
     <VSkeletonLoader type="card" />
+    <div class="d-flex justify-center">
+      ⏳ Chargement du quiz en cours, patience...
+    </div>
   </template>
   <template v-else>
     <template v-if="!human">

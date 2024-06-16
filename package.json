@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
+    "luxon": "^3.4.4",
     "mongoose": "^8.4.1",
     "nuxt": "^3.11.2",
     "vue": "^3.4.27",
@@ -18,6 +19,9 @@
     "vue-router": "^4.3.2"
   },
   "devDependencies": {
+    "@types/luxon": "^3.4.2",
+    "@vueuse/core": "^10.11.0",
+    "@vueuse/nuxt": "^10.11.0",
     "vite-plugin-vuetify": "^2.0.3",
     "vuetify": "^3.6.8"
   }
