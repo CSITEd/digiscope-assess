@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
+
 import { RecaptchaAction, useGoogleRecaptcha } from '../composables/useGoogleRecaptcha'
 
 const data = ref()
