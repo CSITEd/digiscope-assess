@@ -1,8 +1,11 @@
 <script setup lang="ts">
 const props = defineProps<{
-  questions: any[]
+  quiz: {
+    key: string
+    questions: any[]
+  }
 }>()
-const length = computed(() => props.questions.length)
+const length = computed(() => props.quiz.questions.length)
 
 const currentQuestion = ref(0)
 const selectedAnswer = ref<number>()
@@ -47,7 +50,7 @@ function nextQuestion() {
     </template>
 
     <template v-slot:text>
-      <Question v-if="ongoing" :question="questions[currentQuestion]" v-model="selectedAnswer" />
+      <Question v-if="ongoing" :question="quiz.questions[currentQuestion]" v-model="selectedAnswer" />
     </template>
 
     <template v-slot:actions v-if="ongoing">
@@ -61,4 +64,5 @@ function nextQuestion() {
   <p v-if="ongoing">Selected answer: {{ selectedAnswer }}</p>
   <p>Answer: {{ answers }}</p>
   <p>Status: {{ ongoing ? 'ONGOING' : 'FINISHED' }}</p>
+  <p>Key: {{ quiz.key }}</p>
 </template>

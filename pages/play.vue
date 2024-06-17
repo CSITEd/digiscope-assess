@@ -10,7 +10,7 @@ const { executeRecaptcha } = useGoogleRecaptcha()
 onMounted(async () => {
   const { token } = await executeRecaptcha(RecaptchaAction.login)
   try {
-    data.value = await $fetch('/api/test', {
+    data.value = await $fetch('/api/quiz', {
       baseURL: 'http://localhost:3000',
       method: 'GET',
       headers: {
@@ -38,6 +38,6 @@ onMounted(async () => {
     <template v-if="!human">
       <p>You are not a human!</p>
     </template>
-    <Quiz v-else :questions="data?.questions" />
+    <Quiz v-else :quiz="data" />
   </template>
 </template>
