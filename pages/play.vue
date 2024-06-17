@@ -7,8 +7,9 @@ const loading = ref(true)
 const human = ref(false)
 const { executeRecaptcha } = useGoogleRecaptcha()
 
-onMounted(async () => {
+const loadQuiz = async () => {
   const { token } = await executeRecaptcha(RecaptchaAction.login)
+
   try {
     data.value = await $fetch('/api/quiz', {
       baseURL: 'http://localhost:3000',
@@ -24,6 +25,36 @@ onMounted(async () => {
   } finally {
     loading.value = false
   }
+}
+
+const saveResults = async (answers) => {
+  const { token } = await executeRecaptcha(RecaptchaAction.login)
+  
+  try {
+    await $fetch('/api/quiz', {
+      baseURL: 'http://localhost:3000',
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'google-recaptcha-token': token ?? '',
+      },
+      body: {
+        answers,
+        key: data.value.key,
+      },
+    })
+  } catch (e) {
+
+  } finally {
+  }
+}
+
+const finished = async (args) => {
+  await saveResults(args)
+}
+
+onMounted(async () => {
+  await loadQuiz()
 })
 </script>
 
@@ -38,6 +69,6 @@ onMounted(async () => {
     <template v-if="!human">
       <p>You are not a human!</p>
     </template>
-    <Quiz v-else :quiz="data" />
+    <Quiz v-else :quiz="data" @finished="finished" />
   </template>
 </template>

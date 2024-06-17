@@ -5,6 +5,10 @@ const props = defineProps<{
     questions: any[]
   }
 }>()
+const emit = defineEmits<{
+  finished: [answers: (number | null)[]]
+}>()
+
 const length = computed(() => props.quiz.questions.length)
 
 const currentQuestion = ref(0)
@@ -29,9 +33,11 @@ function skipQuestion() {
 }
 
 function nextQuestion() {
-  if (ongoing.value) {
-    selectedAnswer.value = undefined
-    currentQuestion.value++;
+  selectedAnswer.value = undefined
+  currentQuestion.value++;
+
+  if (!ongoing.value) {
+    emit('finished', answers.value)
   }
 }
 </script>
