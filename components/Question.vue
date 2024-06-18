@@ -13,20 +13,24 @@ const selectedAnswer = defineModel<number>()
 
 <template>
   <VSheet>
-    {{ question.statement }}
+    <div>
+      <p>{{ question.statement }}</p>
+    </div>
 
-    <VItemGroup selected-class="bg-primary" class="choices" v-model="selectedAnswer">
-      <VItem v-for="choice in question.choices" v-slot="{ selectedClass, toggle }">
-        <VCard :class="selectedClass" variant="tonal" @click="toggle">
-          <VCardText v-if="choice.type === 'text'" class="d-flex justify-center align-center">
-            {{ choice.text }}
-          </VCardText>
-          <VCardText v-else-if="choice.type === 'image'" class="d-flex justify-center align-center">
-            <img :src="`/${choice.image}`" />
-          </VCardText>
-        </VCard>
-      </VItem>
+    <div class="mt-5">
+      <VItemGroup selected-class="bg-primary" class="choices" v-model="selectedAnswer">
+        <VItem v-for="choice in question.choices" v-slot="{ selectedClass, toggle }">
+          <VCard :class="selectedClass" variant="tonal" @click="toggle">
+            <VCardText v-if="choice.type === 'text'" class="d-flex justify-center align-center">
+              {{ choice.text }}
+            </VCardText>
+            <VCardText v-else-if="choice.type === 'image'" class="d-flex justify-center align-center">
+              <img :src="`/${choice.image}`" />
+            </VCardText>
+          </VCard>
+        </VItem>
      </VItemGroup>
+    </div>
   </VSheet>
 </template>
 

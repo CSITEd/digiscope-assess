@@ -5,6 +5,7 @@ const props = defineProps<{
     questions: any[]
   }
 }>()
+
 const emit = defineEmits<{
   finished: [answers: (number | null)[]]
 }>()
@@ -52,7 +53,7 @@ function nextQuestion() {
     </template>
 
     <template v-if="ongoing" v-slot:append>
-      <Timer :duration="10" :start-timestamp="Date.now()" @elapsed="console.log('ELAPSED')" />
+      <Timer :duration="8 * 60" :start-timestamp="Date.now()" @elapsed="console.log('ELAPSED')" />
     </template>
 
     <template v-slot:text>
@@ -66,9 +67,4 @@ function nextQuestion() {
       </div>
     </template>
   </VCard>
-
-  <p v-if="ongoing">Selected answer: {{ selectedAnswer }}</p>
-  <p>Answer: {{ answers }}</p>
-  <p>Status: {{ ongoing ? 'ONGOING' : 'FINISHED' }}</p>
-  <p>Key: {{ quiz.key }}</p>
 </template>

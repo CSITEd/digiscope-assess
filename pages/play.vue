@@ -3,15 +3,19 @@ import { onMounted, ref } from 'vue';
 
 import { RecaptchaAction, useGoogleRecaptcha } from '../composables/useGoogleRecaptcha'
 
+const loading = ref()
+const phase = ref<'quiz' | 'result'>()
 const data = ref()
-const loading = ref(true)
-const human = ref(false)
+
 const { executeRecaptcha } = useGoogleRecaptcha()
+const human = ref()
 
 const loadQuiz = async () => {
   const { token } = await executeRecaptcha(RecaptchaAction.login)
 
   try {
+    human.value = false
+
     data.value = await $fetch('/api/quiz', {
       baseURL: 'http://localhost:3000',
       method: 'GET',
@@ -20,6 +24,7 @@ const loadQuiz = async () => {
         'google-recaptcha-token': token ?? '',
       },
     })
+
     human.value = true
   } catch (e) {
 
@@ -30,8 +35,10 @@ const loadQuiz = async () => {
 
 const saveResults = async (answers) => {
   const { token } = await executeRecaptcha(RecaptchaAction.login)
-  
+
   try {
+    human.value = false
+
     await $fetch('/api/quiz', {
       baseURL: 'http://localhost:3000',
       method: 'PATCH',
@@ -44,32 +51,45 @@ const saveResults = async (answers) => {
         key: data.value.key,
       },
     })
+
+    human.value = true
   } catch (e) {
 
   } finally {
+    loading.value = false
   }
 }
 
 const finished = async (args) => {
+  loading.value = true
+  phase.value = 'result'
+
   await saveResults(args)
 }
 
 onMounted(async () => {
+  loading.value = true
+  phase.value = 'quiz'
+
   await loadQuiz()
 })
 </script>
 
 <template>
-  <template v-if="loading">
+  <template v-if="phase === 'quiz' && loading">
     <VSkeletonLoader type="card" />
     <div class="d-flex justify-center">
       ⏳ Chargement du quiz en cours, patience...
     </div>
   </template>
+
+  <template v-if="!human && !loading">
+    <p>You are not a human!</p>
+  </template>
+
   <template v-else>
-    <template v-if="!human">
-      <p>You are not a human!</p>
-    </template>
-    <Quiz v-else :quiz="data" @finished="finished" />
+    <Quiz v-if="phase === 'quiz' && !loading" :quiz="data" @finished="finished" />
+
+    <Result v-if="phase === 'result' && !loading" :knowledge="6" :behaviour="4" />
   </template>
 </template>
