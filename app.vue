@@ -8,7 +8,7 @@
 
 <style>
 body {
-  margin: 15px;
+  margin: 25px;
 }
 p {
   margin: 10px 0;
