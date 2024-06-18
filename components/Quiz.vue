@@ -52,7 +52,7 @@ function nextQuestion() {
     </template>
 
     <template v-if="ongoing" v-slot:append>
-      <Timer :start-timestamp="Date.now()" />
+      <Timer :duration="10" :start-timestamp="Date.now()" @elapsed="console.log('ELAPSED')" />
     </template>
 
     <template v-slot:text>
