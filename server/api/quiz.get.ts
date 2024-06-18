@@ -5,8 +5,8 @@ import Quiz from '@/server/models/quiz';
 
 export default defineEventHandler(async () => {
   const questions = await Question.aggregate([
-    { $sample: { size: 2 } },
-    { $project: { choices: 1, statement: 1} },
+    { $sample: { size: 5 } },
+    { $project: { choices: 1, context: 1, image: 1, statement: 1} },
   ])
     
   const quiz = new Quiz({

@@ -4,6 +4,8 @@ import type { IChoice } from '@/server/models/question'
 const props = defineProps<{
   question: {
     choices: IChoice[]
+    context?: string
+    image?: string
     statement: string
   }
 }>()
@@ -14,7 +16,13 @@ const selectedAnswer = defineModel<number>()
 <template>
   <VSheet>
     <div>
-      <p>{{ question.statement }}</p>
+      <p v-if="question.context">{{ question.context }}</p>
+
+      <div v-if="question.image" class="text-center mb-5 mt-5">
+        <img :src="`/${question.image}`" style="max-width: 100%" />
+      </div>
+
+      <p class="font-weight-bold">{{ question.statement }}</p>
     </div>
 
     <div class="mt-5">

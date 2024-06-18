@@ -1,7 +1,7 @@
 import { model, Schema } from 'mongoose'
 
 type IImageChoice = {
-    image: URL
+  image: string
   type: 'image'
 }
 type ITextChoice = {
@@ -15,6 +15,7 @@ export type IQuestion = {
   answer: number
   choices: IChoice[]
   context?: string
+  image?: string
   statement: string
   type: 'behaviour' | 'theory'
 }
@@ -22,9 +23,11 @@ export type IQuestion = {
 const ChoiceSchema = new Schema<IChoice>({
   image: {
     type: String,
+    trim: true,
   },
   text: {
     type: String,
+    trim: true,
   },
 }, {
   id: false,
@@ -42,6 +45,10 @@ const QuestionSchema = new Schema<IQuestion>({
     required: true,
   },
   context: {
+    type: String,
+    trim: true,
+  },
+  image: {
     type: String,
     trim: true,
   },
